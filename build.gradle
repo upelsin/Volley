@@ -32,4 +32,18 @@ android {
         instrumentTest.setRoot('tests')
         instrumentTest.java.srcDirs = ['tests/src']
     }
+	
 }
+
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
+	
+	task jar(type: Jar) {
+    from android.sourceSets.main.java
+}
+
+    artifacts {
+        archives androidSourcesJar
+    }
