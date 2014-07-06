@@ -3,19 +3,31 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.8.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
 
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.1"
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        versionCode 1
+        versionName "1.0.5-SNAPSHOT"
+    }
+
+    signingConfigs {
+        release { }
+
+        project.archivesBaseName = "volley-upelsin-1.0.5";
+    }
 
     sourceSets {
         defaultConfig {
             testPackageName 'com.android.volley.tests'
+            testInstrumentationRunner "android.test.InstrumentationTestRunner"
         }
 
         main {
@@ -32,18 +44,17 @@ android {
         instrumentTest.setRoot('tests')
         instrumentTest.java.srcDirs = ['tests/src']
     }
-	
 }
 
-    task androidSourcesJar(type: Jar) {
-        classifier = 'sources'
-        from android.sourceSets.main.java.srcDirs
-    }
-	
-	task jar(type: Jar) {
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+task jar(type: Jar) {
     from android.sourceSets.main.java
 }
 
-    artifacts {
-        archives androidSourcesJar
-    }
+artifacts {
+    archives androidSourcesJar
+}
